@@ -13,7 +13,7 @@ import com.miniapp.backend.dto.LoginRequest;
 import com.miniapp.backend.dto.RegisterRequest;
 import com.miniapp.backend.service.AuthService;
 
-@CrossOrigin(origins = "http://localhost:8000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class AuthController {

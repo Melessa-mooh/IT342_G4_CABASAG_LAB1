@@ -21,15 +21,14 @@ public class AuthService {
 
     // Email regex pattern for validation
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
-        "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$"
-    );
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$");
 
     // Password policy constraints
     private static final int MIN_PASSWORD_LENGTH = 8;
 
     public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtTokenProvider jwtTokenProvider) {
+            PasswordEncoder passwordEncoder,
+            JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -39,12 +38,17 @@ public class AuthService {
      * Register a new user with validation
      */
     public AuthResponse register(RegisterRequest request) {
+        String firstname = request.getFirstname() != null ? request.getFirstname().trim() : "";
+        String lastname = request.getLastname() != null ? request.getLastname().trim() : "";
         String email = request.getEmail() != null ? request.getEmail().trim() : "";
         String username = request.getUsername() != null ? request.getUsername().trim() : null;
         String password = request.getPassword();
         String confirmPassword = request.getConfirmPassword();
 
         // Validation
+        if (firstname.isEmpty() || lastname.isEmpty()) {
+            return new AuthResponse("First name and last name are required");
+        }
         if (email.isEmpty()) {
             return new AuthResponse("Email is required");
         }
@@ -59,8 +63,7 @@ public class AuthService {
         }
         if (!validatePassword(password)) {
             return new AuthResponse(
-                "Password must be at least 8 characters with uppercase, lowercase, and a number"
-            );
+                    "Password must be at least 8 characters with uppercase, lowercase, and a number");
         }
         if (!password.equals(confirmPassword)) {
             return new AuthResponse("Passwords do not match");
@@ -68,6 +71,8 @@ public class AuthService {
 
         // Create user
         User user = new User();
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
         user.setEmail(email);
         if (username != null && !username.isEmpty()) {
             user.setUsername(username);
@@ -81,31 +86,43 @@ public class AuthService {
         // Generate JWT token
         String token = jwtTokenProvider.generateToken(savedUser.getEmail());
 
-        UserDto userDto = new UserDto(savedUser.getId(), savedUser.getEmail(),
-                                      savedUser.getUsername(), savedUser.getRoles(),
-                                      savedUser.isActive());
+        UserDto userDto = new UserDto(savedUser.getId(), savedUser.getFirstname(), savedUser.getLastname(),
+                savedUser.getEmail(), savedUser.getUsername(), savedUser.getRoles(),
+                savedUser.isActive());
 
         return new AuthResponse("User registered successfully", token, userDto);
     }
 
     /**
-     * Login user with credentials
+     * Login user with credentials (username or email)
      */
     public AuthResponse login(LoginRequest request) {
+        String username = request.getUsername() != null ? request.getUsername().trim() : "";
         String email = request.getEmail() != null ? request.getEmail().trim() : "";
         String password = request.getPassword();
 
-        if (email.isEmpty() || password == null || password.isEmpty()) {
-            return new AuthResponse("Email and password are required");
+        if (username.isEmpty() && email.isEmpty()) {
+            return new AuthResponse("Username/Email and password are required");
+        }
+        if (password == null || password.isEmpty()) {
+            return new AuthResponse("Username/Email and password are required");
         }
 
-        User user = userRepository.findByEmail(email);
+        // Try to find user by username first, then by email
+        User user = null;
+        if (!username.isEmpty()) {
+            user = userRepository.findByUsername(username);
+        }
+        if (user == null && !email.isEmpty()) {
+            user = userRepository.findByEmail(email);
+        }
+
         if (user == null) {
-            return new AuthResponse("Invalid email or password");
+            return new AuthResponse("Invalid username/email or password");
         }
 
         if (!passwordEncoder.matches(password, user.getPasswordHash())) {
-            return new AuthResponse("Invalid email or password");
+            return new AuthResponse("Invalid username/email or password");
         }
 
         if (!user.isActive()) {
@@ -115,9 +132,9 @@ public class AuthService {
         // Generate JWT token
         String token = jwtTokenProvider.generateToken(user.getEmail());
 
-        UserDto userDto = new UserDto(user.getId(), user.getEmail(),
-                                      user.getUsername(), user.getRoles(),
-                                      user.isActive());
+        UserDto userDto = new UserDto(user.getId(), user.getFirstname(), user.getLastname(),
+                user.getEmail(), user.getUsername(), user.getRoles(),
+                user.isActive());
 
         return new AuthResponse("Login successful", token, userDto);
     }
@@ -147,8 +164,8 @@ public class AuthService {
         if (password.length() < MIN_PASSWORD_LENGTH) {
             return false;
         }
-        return password.matches(".*[A-Z].*") &&      // uppercase
-               password.matches(".*[a-z].*") &&      // lowercase
-               password.matches(".*[0-9].*");        // digit
+        return password.matches(".*[A-Z].*") && // uppercase
+                password.matches(".*[a-z].*") && // lowercase
+                password.matches(".*[0-9].*"); // digit
     }
 }

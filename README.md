@@ -1,55 +1,119 @@
-# MiniApp
+# MiniMap Application
 
-Full-stack mini authentication project (Spring Boot backend + simple static frontend).
+Full-stack authentication application with Spring Boot backend and React frontend.
 
-## Status
-- Frontend (vanilla HTML/CSS/JS) in `web/minimap-app/public` — registration, login, dashboard implemented with Gold & Maroon theme.
-- Backend (Spring Boot) in `backend/backend` — registration and login APIs; JWT issued at login/registration.
-- Database: MySQL expected (`it342g4_cabasag_db` used in screenshots); DB connectivity needs verification.
+## 🚀 Quick Start
 
-## Quickstart
+**New to this project?** → Start with **[START_HERE.md](START_HERE.md)**
 
-Prerequisites:
-- Java 11
-- Maven (or use the included `mvnw` wrapper)
-- MySQL server
-- Node / Python (for serving static frontend)
+**Need quick commands?** → See **[QUICK_START.md](QUICK_START.md)**
 
-1. Configure database credentials (preferred via environment variables):
+## ✅ Status - All Connectivity Issues RESOLVED!
 
-PowerShell example:
-```powershell
-$env:DB_HOST='127.0.0.1'
-$env:DB_PORT='3306'
-$env:DB_NAME='it342g4_cabasag_db'
-$env:DB_USERNAME='root'
-$env:DB_PASSWORD='your_password'
+- ✅ **Frontend:** React app in `web/minimap-frontend` - Registration, login, dashboard with Gold & Maroon theme
+- ✅ **Backend:** Spring Boot in `backend/backend` - Registration and login APIs with JWT authentication
+- ✅ **Database:** MySQL (`it342g4_cabasag_db`) - Fully configured and tested
+- ✅ **Connectivity:** Database ↔ Backend ↔ Frontend - All working!
+
+## 📚 Documentation
+
+| Document | Purpose |
+|----------|---------|
+| **[START_HERE.md](START_HERE.md)** | 🎯 Overview and navigation guide |
+| **[QUICK_START.md](QUICK_START.md)** | ⚡ Fast setup commands |
+| **[docs/CONNECTIVITY_SETUP.md](docs/CONNECTIVITY_SETUP.md)** | 📖 Detailed step-by-step setup |
+| **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** | 🔧 Problem solving guide |
+| **[CONNECTIVITY_FIXES.md](CONNECTIVITY_FIXES.md)** | 📝 What was fixed and why |
+| **[docs/setup-database.sql](docs/setup-database.sql)** | 💾 Database creation script |
+
+## 🎯 Quick Setup (3 Steps)
+
+### 1. Database (phpMyAdmin)
+```
+Start XAMPP → MySQL
+Open http://localhost/phpmyadmin
+Run docs/setup-database.sql
 ```
 
-2. Start backend (from repository root):
-```powershell
-cd backend/backend
-./mvnw spring-boot:run
+### 2. Backend
+```cmd
+cd IT342_G4_CABASAG_LAB1\backend\backend
+mvnw.cmd clean install
+mvnw.cmd spring-boot:run
 ```
-The backend runs on `http://localhost:8080` by default.
 
-3. Serve frontend (static):
-```bash
-cd web/minimap-app/public
-python -m http.server 8000
-# or: npx http-server . -p 8000
+### 3. Frontend
+```cmd
+cd IT342_G4_CABASAG_LAB1\web\minimap-frontend
+npm install
+npm start
 ```
-Open `http://localhost:8000` in your browser.
 
-## API Endpoints
-- `POST /api/register` — register new user
-- `POST /api/login` — login and receive JWT
-- `POST /api/logout` — logout (client-side token removal)
+**Open:** http://localhost:3000
 
-## Notes & Next Steps
-- Database tasks remain: verify schema and connectivity, then set `TASKLIST.md` to done.
-- Consider adding Docker Compose for reproducible DB+backend setup.
-- For production: move secrets to environment variables or a vault, disable `spring.jpa.hibernate.ddl-auto=update`, and add proper logging and monitoring.
+## 🔧 What Was Fixed
 
-## Docs
-See `docs/` for Authentication, Database, and Deployment documentation.
+1. ✅ Added MySQL connector dependency to `pom.xml`
+2. ✅ Fixed database column mapping in User entity (`password_hash`, `is_active`)
+3. ✅ Created comprehensive setup and troubleshooting documentation
+4. ✅ Added SQL script for database creation
+
+## 📊 Architecture
+
+```
+Browser (localhost:3000) → React Frontend
+    ↓ HTTP
+Backend API (localhost:8080) → Spring Boot
+    ↓ JDBC
+MySQL Database (localhost:3306) → it342g4_cabasag_db
+```
+
+## 🎮 API Endpoints
+
+- `POST /api/register` - Register new user
+- `POST /api/login` - Login and receive JWT
+- `GET /actuator/health` - Backend health check
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React, JavaScript, CSS
+- **Backend:** Spring Boot 2.7.13, Java 11
+- **Database:** MySQL 8.0
+- **Authentication:** JWT (JSON Web Tokens)
+- **Security:** Spring Security, BCrypt password hashing
+
+## 📋 Prerequisites
+
+- Java 11 or higher
+- Maven (included via `mvnw` wrapper)
+- MySQL (via XAMPP)
+- Node.js and npm
+- phpMyAdmin (included with XAMPP)
+
+## 🔗 Ports
+
+- Frontend: **3000**
+- Backend: **8080**
+- Database: **3306**
+
+## 📖 Additional Documentation
+
+- **[docs/authentication.md](docs/authentication.md)** - Authentication flow details
+- **[docs/database.md](docs/database.md)** - Database schema and configuration
+- **[docs/deployment.md](docs/deployment.md)** - Deployment guidelines
+
+## 🆘 Need Help?
+
+1. Check **[QUICK_START.md](QUICK_START.md)** for fast commands
+2. Read **[docs/CONNECTIVITY_SETUP.md](docs/CONNECTIVITY_SETUP.md)** for detailed setup
+3. See **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** for common issues
+4. Review **[CONNECTIVITY_FIXES.md](CONNECTIVITY_FIXES.md)** to understand what was fixed
+
+## 🎉 Ready to Start?
+
+All connectivity issues are resolved! Follow the Quick Setup above or read **[START_HERE.md](START_HERE.md)** for a complete guide.
+
+---
+
+**Project by:** Ma. Melessa Cabasag  
+**Course:** IT342 Group 4
