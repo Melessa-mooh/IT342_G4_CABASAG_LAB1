@@ -15,41 +15,42 @@ function Login() {
     return e;
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const validationErrors = validateInput();
-    setErrors(validationErrors);
-    
-    if (Object.keys(validationErrors).length === 0) {
-      setIsLoading(true);
-      try {
-        const data = await loginUser(formData.username, formData.password);
-        
-        // Check if response has error
-        if (data.error) {
-          setErrors({ form: data.error });
-        } else if (data.user) {
-          // Success - user data exists
-          localStorage.setItem('user', JSON.stringify(data.user));
-          navigate('/dashboard');
-        } else {
-          // Unexpected response format
-          setErrors({ form: 'Login successful but unexpected response format. Please try again.' });
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const validationErrors = validateInput();
+      setErrors(validationErrors);
+      
+      if (Object.keys(validationErrors).length === 0) {
+        setIsLoading(true);
+        try {
+          const data = await loginUser(formData.username, formData.password);
+          
+          if (data.error) {
+            setErrors({ form: data.error });
+          } else if (data.token) { // Check for the token from your backend
+            // SAVE BOTH: The user info and the security token
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('token', data.token); // This is what the Guard checks
+            
+            navigate('/dashboard');
+          } else {
+            setErrors({ form: 'Login successful but no token received.' });
+          }
+        } catch (error) {
+          setErrors({ form: `Error: ${error.message}` });
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Login error:', error);
-        setErrors({ form: `Error: ${error.message || 'Network error. Please try again.'}` });
-      } finally {
-        setIsLoading(false);
       }
     }
-  }
+ 
 
   return (
     <div className="auth-root">
       <div className="panel left-panel">
         <div className="welcome">
-          <h1>MiniMap</h1>
+          <h1>Mini-App</h1>
           <p>Sign in to your account.</p>
           <div className="actions-vertical">
             <button className="btn active">Login</button>
@@ -75,7 +76,7 @@ function Login() {
               onChange={e => setFormData({...formData, username: e.target.value})} 
               type="text" 
               name="username" 
-              placeholder="Enter username or email" 
+              placeholder="Enter username" 
             />
             {errors.username && <div className="error">{errors.username}</div>}
 
@@ -101,7 +102,7 @@ function Login() {
         </div>
       </div>
 
-      <footer className="footer">A simple minimap-app version by Ma. Melessa Cabasag</footer>
+      <footer className="footer">A simple mini-app version by Ma. Melessa Cabasag</footer>
     </div>
   );
 }
