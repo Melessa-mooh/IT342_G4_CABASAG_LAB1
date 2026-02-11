@@ -28,10 +28,10 @@ function Dashboard() {
     <div className="dashboard-root">
       <aside className="sidebar">
         <div className="sidebar-brand">
-          <div className="logo-icon">🗺️</div>
+          <div className="logo-icon"></div>
           <div className="brand-text">
-            <h1>MiniMap</h1>
-            <p>App</p>
+            <h1>Mini-App</h1>
+            <p>by Ma. Melessa Cabasag</p>
           </div>
         </div>
 
@@ -40,7 +40,6 @@ function Dashboard() {
             className={`nav-item ${activeNav === 'dashboard' ? 'active' : ''}`} 
             onClick={() => setActiveNav('dashboard')}
           >
-            <span className="nav-icon">📊</span>
             <span className="nav-text">Dashboard</span>
           </button>
           <button 
@@ -62,7 +61,7 @@ function Dashboard() {
         {activeNav === 'dashboard' && (
           <div className="welcome-header">
             <h1>Hi {user.firstname}! 👋</h1>
-            <p>Welcome to your MiniMap Dashboard</p>
+            <p>Welcome to your Mini-App Dashboard</p>
           </div>
         )}
         {activeNav === 'profile' && (
