@@ -1,30 +1,12 @@
-# MiniMap Application
+# Mini Application
 
 Full-stack authentication application with Spring Boot backend and React frontend.
-
-## 🚀 Quick Start
-
-**New to this project?** → Start with **[START_HERE.md](START_HERE.md)**
-
-**Need quick commands?** → See **[QUICK_START.md](QUICK_START.md)**
-
-## ✅ Status - All Connectivity Issues RESOLVED!
 
 - ✅ **Frontend:** React app in `web/minimap-frontend` - Registration, login, dashboard with Gold & Maroon theme
 - ✅ **Backend:** Spring Boot in `backend/backend` - Registration and login APIs with JWT authentication
 - ✅ **Database:** MySQL (`it342g4_cabasag_db`) - Fully configured and tested
 - ✅ **Connectivity:** Database ↔ Backend ↔ Frontend - All working!
 
-## 📚 Documentation
-
-| Document | Purpose |
-|----------|---------|
-| **[START_HERE.md](START_HERE.md)** | 🎯 Overview and navigation guide |
-| **[QUICK_START.md](QUICK_START.md)** | ⚡ Fast setup commands |
-| **[docs/CONNECTIVITY_SETUP.md](docs/CONNECTIVITY_SETUP.md)** | 📖 Detailed step-by-step setup |
-| **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** | 🔧 Problem solving guide |
-| **[CONNECTIVITY_FIXES.md](CONNECTIVITY_FIXES.md)** | 📝 What was fixed and why |
-| **[docs/setup-database.sql](docs/setup-database.sql)** | 💾 Database creation script |
 
 ## 🎯 Quick Setup (3 Steps)
 
@@ -95,25 +77,8 @@ MySQL Database (localhost:3306) → it342g4_cabasag_db
 - Frontend: **3000**
 - Backend: **8080**
 - Database: **3306**
-
-## 📖 Additional Documentation
-
-- **[docs/authentication.md](docs/authentication.md)** - Authentication flow details
-- **[docs/database.md](docs/database.md)** - Database schema and configuration
-- **[docs/deployment.md](docs/deployment.md)** - Deployment guidelines
-
-## 🆘 Need Help?
-
-1. Check **[QUICK_START.md](QUICK_START.md)** for fast commands
-2. Read **[docs/CONNECTIVITY_SETUP.md](docs/CONNECTIVITY_SETUP.md)** for detailed setup
-3. See **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** for common issues
-4. Review **[CONNECTIVITY_FIXES.md](CONNECTIVITY_FIXES.md)** to understand what was fixed
-
-## 🎉 Ready to Start?
-
-All connectivity issues are resolved! Follow the Quick Setup above or read **[START_HERE.md](START_HERE.md)** for a complete guide.
-
+- 
 ---
 
 **Project by:** Ma. Melessa Cabasag  
-**Course:** IT342 Group 4
+**Course:** IT342 G4
