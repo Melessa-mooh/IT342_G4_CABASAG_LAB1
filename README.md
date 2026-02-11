@@ -1,4 +1,4 @@
-# MiniMap Application
+# Mini Application
 
 Full-stack authentication application with Spring Boot backend and React frontend.
 
