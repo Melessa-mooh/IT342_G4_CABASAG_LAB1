@@ -10,7 +10,7 @@ export async function loginUser(username, password) {
     
     const data = await response.json();
     
-    // If response is not OK, return error
+    
     if (!response.ok) {
       return { error: data.error || data.message || 'Login failed' };
     }
@@ -44,7 +44,6 @@ export async function registerUser(firstname, lastname, username, email, passwor
     const data = await response.json();
     console.log('Register API response data:', data);
     
-    // If response is not OK, return error
     if (!response.ok) {
       return { error: data.error || data.message || `Registration failed (${response.status})` };
     }
